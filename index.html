@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InviteU Digital - Invitaciones Digitales para Bodas</title>
-    <meta name="description" content="Crea invitaciones digitales únicas y elegantes para tu boda. Diseños personalizados, subdominio exclusivo y gestión completa.">
+    <title>InviteU Digital - Invitaciones Digitales para Todos tus Eventos Especiales</title>
+    <meta name="description" content="Crea invitaciones digitales únicas para bodas, cumpleaños, bautizos, baby showers y más. Diseños personalizados con sistema de pago seguro.">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -23,8 +24,8 @@
                     <svg class="store-icon" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2">
                         <defs>
                             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#ec4899" />
-                                <stop offset="100%" stop-color="#a855f7" />
+                                <stop offset="0%" stop-color="#d4af37" />
+                                <stop offset="100%" stop-color="#1e3a8a" />
                             </linearGradient>
                         </defs>
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -35,22 +36,58 @@
 
             <nav class="desktop-nav">
                 <a href="#inicio" class="nav-link">Inicio</a>
+                <div class="dropdown">
+                    <button class="dropbtn nav-link">
+                        Eventos
+                        <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"/>
+                        </svg>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#eventos" data-filter="bodas">Bodas</a>
+                        <a href="#eventos" data-filter="cumpleanos">Cumpleaños</a>
+                        <a href="#eventos" data-filter="bautizos">Bautizos</a>
+                        <a href="#eventos" data-filter="baby-shower">Baby Showers</a>
+                        <a href="#eventos" data-filter="todos">Ver Todos</a>
+                    </div>
+                </div>
                 <a href="#paquetes" class="nav-link">Paquetes</a>
-                <a href="#blog" class="nav-link">Blog</a>
                 <a href="#testimonios" class="nav-link">Testimonios</a>
                 <a href="#contacto" class="nav-link">Contacto</a>
             </nav>
 
             <div class="navbar-right">
-                <button class="cart-btn">
+                <div class="auth-buttons" id="authButtons">
+  <button class="btn btn-outline" id="loginBtn">Iniciar Sesión</button>
+  <button class="btn btn-primary" id="registerBtn">Registrarse</button>
+</div>
+<div class="user-menu" id="userMenu" style="display: none;">
+  <div class="dropdown">
+    <button class="user-btn" id="userBtn">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span id="userName">Usuario</span>
+      <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="6,9 12,15 18,9"/>
+      </svg>
+    </button>
+    <div class="dropdown-content">
+      <a href="#" id="userPanelBtn">Mi Panel</a>
+      <a href="#" id="myOrdersBtn">Mis Pedidos</a>
+      <a href="#" id="logoutBtn">Cerrar Sesión</a>
+    </div>
+  </div>
+</div>
+                <button class="cart-btn" id="cartBtn">
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                        <line x1="3" x2="21" y1="6" y2="6"/>
-                        <path d="m16 10-4 4-4-4"/>
+                        <circle cx="8" cy="21" r="1"/>
+                        <circle cx="19" cy="21" r="1"/>
+                        <path d="m2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
                     </svg>
-                    <span class="cart-count">0</span>
+                    <span class="cart-count" id="cartCount">0</span>
                 </button>
-                <button class="btn btn-primary signin-btn">Consultar</button>
             </div>
         </div>
 
@@ -61,8 +98,8 @@
                     <svg class="store-icon" viewBox="0 0 24 24" fill="none" stroke="url(#gradient2)" stroke-width="2">
                         <defs>
                             <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#ec4899" />
-                                <stop offset="100%" stop-color="#a855f7" />
+                                <stop offset="0%" stop-color="#d4af37" />
+                                <stop offset="100%" stop-color="#1e3a8a" />
                             </linearGradient>
                         </defs>
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -78,8 +115,8 @@
             </div>
             <nav class="mobile-nav">
                 <a href="#inicio" class="mobile-nav-link">Inicio</a>
+                <a href="#eventos" class="mobile-nav-link">Eventos</a>
                 <a href="#paquetes" class="mobile-nav-link">Paquetes</a>
-                <a href="#blog" class="mobile-nav-link">Blog</a>
                 <a href="#testimonios" class="mobile-nav-link">Testimonios</a>
                 <a href="#contacto" class="mobile-nav-link">Contacto</a>
                 <div class="mobile-signin">
@@ -96,31 +133,52 @@
                 <div class="hero-content">
                     <div class="hero-text">
                         <div class="hero-badge">Invitaciones Digitales Únicas</div>
-                        <h1 class="hero-title">Tu Boda Merece una Invitación Especial</h1>
+                        <h1 class="hero-title">Invitaciones Digitales para Todos tus Eventos Especiales</h1>
                         <p class="hero-description">
-                            Creamos invitaciones digitales personalizadas que reflejan la magia de tu gran día. Diseño web exclusivo, subdominio personalizado y gestión completa por 3 meses.
+                            Crea invitaciones digitales personalizadas para bodas, cumpleaños, bautizos, baby showers y más. Diseño web exclusivo, subdominio personalizado y gestión completa.
                         </p>
                         <div class="hero-buttons">
-                            <button class="btn btn-primary">Ver Paquetes</button>
-                            <button class="btn btn-outline">Galería de Diseños</button>
+                            <button class="btn btn-primary" onclick="scrollToSection('eventos')">Ver Diseños</button>
+                            <button class="btn btn-outline" onclick="scrollToSection('paquetes')">Ver Paquetes</button>
                         </div>
                     </div>
                     <div class="hero-image">
-                        <div class="hero-image-container">
-                            <img src="/placeholder.svg?height=500&width=500" alt="Invitación digital de boda elegante" class="hero-img">
-                            <div class="hero-card hero-card-1">
-                                <div class="hero-card-icon"></div>
-                                <div class="hero-card-content">
-                                    <div class="hero-card-title">Diseño Único</div>
-                                    <div class="hero-card-subtitle">100% Personalizado</div>
+                        <div class="hero-slider">
+                            <div class="slider-container">
+                                <div class="slide active" data-event="bodas">
+                                    <img src="/placeholder.svg?height=400&width=400" alt="Invitación digital de boda elegante">
+                                    <div class="slide-overlay">
+                                        <h3>Bodas</h3>
+                                        <p>Diseños románticos y elegantes</p>
+                                    </div>
+                                </div>
+                                <div class="slide" data-event="cumpleanos">
+                                    <img src="/placeholder.svg?height=400&width=400" alt="Invitación digital de cumpleaños colorida">
+                                    <div class="slide-overlay">
+                                        <h3>Cumpleaños</h3>
+                                        <p>Celebra con estilo y diversión</p>
+                                    </div>
+                                </div>
+                                <div class="slide" data-event="bautizos">
+                                    <img src="/placeholder.svg?height=400&width=400" alt="Invitación digital de bautizo tierna">
+                                    <div class="slide-overlay">
+                                        <h3>Bautizos</h3>
+                                        <p>Momentos especiales y sagrados</p>
+                                    </div>
+                                </div>
+                                <div class="slide" data-event="baby-shower">
+                                    <img src="/placeholder.svg?height=400&width=400" alt="Invitación digital de baby shower dulce">
+                                    <div class="slide-overlay">
+                                        <h3>Baby Showers</h3>
+                                        <p>Celebra la llegada del bebé</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="hero-card hero-card-2">
-                                <div class="hero-card-icon"></div>
-                                <div class="hero-card-content">
-                                    <div class="hero-card-title">Subdominio</div>
-                                    <div class="hero-card-subtitle">Exclusivo para ti</div>
-                                </div>
+                            <div class="slider-dots">
+                                <button class="dot active" data-slide="0"></button>
+                                <button class="dot" data-slide="1"></button>
+                                <button class="dot" data-slide="2"></button>
+                                <button class="dot" data-slide="3"></button>
                             </div>
                         </div>
                     </div>
@@ -130,19 +188,164 @@
             <div class="hero-bg-2"></div>
         </section>
 
+        <!-- Events Gallery Section -->
+        <section id="eventos" class="events-gallery">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Diseños por Evento</h2>
+                    <p class="section-description">Explora nuestros diseños únicos para cada tipo de celebración</p>
+                </div>
+                
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="todos">Todos</button>
+                    <button class="filter-btn" data-filter="bodas">Bodas</button>
+                    <button class="filter-btn" data-filter="cumpleanos">Cumpleaños</button>
+                    <button class="filter-btn" data-filter="bautizos">Bautizos</button>
+                    <button class="filter-btn" data-filter="baby-shower">Baby Showers</button>
+                </div>
+
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Bodas -->
+                    <div class="event-card" data-category="bodas" data-design="boda-elegante" data-price="299">
+                        <div class="event-image">
+                            <img src="/placeholder.svg?height=300&width=400" alt="Invitación de boda elegante">
+                            <div class="event-overlay">
+                                <button class="btn btn-primary customize-btn">Personalizar</button>
+                                <button class="btn btn-outline preview-btn">Vista Previa</button>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <h3 class="event-title">Boda Elegante</h3>
+                            <p class="event-description">Diseño romántico con toques dorados</p>
+                            <div class="event-price">Desde €299</div>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-category="bodas" data-design="boda-rustica" data-price="299">
+                        <div class="event-image">
+                            <img src="/placeholder.svg?height=300&width=400" alt="Invitación de boda rústica">
+                            <div class="event-overlay">
+                                <button class="btn btn-primary customize-btn">Personalizar</button>
+                                <button class="btn btn-outline preview-btn">Vista Previa</button>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <h3 class="event-title">Boda Rústica</h3>
+                            <p class="event-description">Estilo campestre y natural</p>
+                            <div class="event-price">Desde €299</div>
+                        </div>
+                    </div>
+
+                    <!-- Cumpleaños -->
+                    <div class="event-card" data-category="cumpleanos" data-design="cumple-festivo" data-price="199">
+                        <div class="event-image">
+                            <img src="/placeholder.svg?height=300&width=400" alt="Invitación de cumpleaños festiva">
+                            <div class="event-overlay">
+                                <button class="btn btn-primary customize-btn">Personalizar</button>
+                                <button class="btn btn-outline preview-btn">Vista Previa</button>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <h3 class="event-title">Cumpleaños Festivo</h3>
+                            <p class="event-description">Colorido y lleno de diversión</p>
+                            <div class="event-price">Desde €199</div>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-category="cumpleanos" data-design="cumple-elegante" data-price="199">
+                        <div class="event-image">
+                            <img src="/placeholder.svg?height=300&width=400" alt="Invitación de cumpleaños elegante">
+                            <div class="event-overlay">
+                                <button class="btn btn-primary customize-btn">Personalizar</button>
+                                <button class="btn btn-outline preview-btn">Vista Previa</button>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <h3 class="event-title">Cumpleaños Elegante</h3>
+                            <p class="event-description">Sofisticado para adultos</p>
+                            <div class="event-price">Desde €199</div>
+                        </div>
+                    </div>
+
+                    <!-- Bautizos -->
+                    <div class="event-card" data-category="bautizos" data-design="bautizo-angelical" data-price="179">
+                        <div class="event-image">
+                            <img src="/placeholder.svg?height=300&width=400" alt="Invitación de bautizo angelical">
+                            <div class="event-overlay">
+                                <button class="btn btn-primary customize-btn">Personalizar</button>
+                                <button class="btn btn-outline preview-btn">Vista Previa</button>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <h3 class="event-title">Bautizo Angelical</h3>
+                            <p class="event-description">Tierno y celestial</p>
+                            <div class="event-price">Desde €179</div>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-category="bautizos" data-design="bautizo-moderno" data-price="179">
+                        <div class="event-image">
+                            <img src="/placeholder.svg?height=300&width=400" alt="Invitación de bautizo moderno">
+                            <div class="event-overlay">
+                                <button class="btn btn-primary customize-btn">Personalizar</button>
+                                <button class="btn btn-outline preview-btn">Vista Previa</button>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <h3 class="event-title">Bautizo Moderno</h3>
+                            <p class="event-description">Contemporáneo y minimalista</p>
+                            <div class="event-price">Desde €179</div>
+                        </div>
+                    </div>
+
+                    <!-- Baby Showers -->
+                    <div class="event-card" data-category="baby-shower" data-design="baby-dulce" data-price="159">
+                        <div class="event-image">
+                            <img src="/placeholder.svg?height=300&width=400" alt="Invitación de baby shower dulce">
+                            <div class="event-overlay">
+                                <button class="btn btn-primary customize-btn">Personalizar</button>
+                                <button class="btn btn-outline preview-btn">Vista Previa</button>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <h3 class="event-title">Baby Shower Dulce</h3>
+                            <p class="event-description">Colores pastel y ternura</p>
+                            <div class="event-price">Desde €159</div>
+                        </div>
+                    </div>
+
+                    <div class="event-card" data-category="baby-shower" data-design="baby-safari" data-price="159">
+                        <div class="event-image">
+                            <img src="/placeholder.svg?height=300&width=400" alt="Invitación de baby shower safari">
+                            <div class="event-overlay">
+                                <button class="btn btn-primary customize-btn">Personalizar</button>
+                                <button class="btn btn-outline preview-btn">Vista Previa</button>
+                            </div>
+                        </div>
+                        <div class="event-info">
+                            <h3 class="event-title">Baby Shower Safari</h3>
+                            <p class="event-description">Aventura y diversión</p>
+                            <div class="event-price">Desde €159</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Packages Section -->
         <section id="paquetes" class="packages">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Nuestros Paquetes</h2>
-                    <p class="section-description">Elige el paquete perfecto para tu invitación digital de boda</p>
+                    <p class="section-description">Elige el paquete perfecto para tu invitación digital</p>
                 </div>
                 <div class="packages-grid">
                     <div class="package-card">
                         <div class="package-header">
                             <h3 class="package-name">Básico</h3>
                             <div class="package-price">
-                                <span class="price">€299</span>
+                                <span class="price">€159</span>
+                                <span class="price-note">- €299</span>
                             </div>
                         </div>
                         <div class="package-features">
@@ -176,16 +379,14 @@
                                 </svg>
                                 <span>Diseño responsive</span>
                             </div>
-                            <div class="feature limited">
+                            <div class="feature included">
                                 <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <line x1="12" x2="12" y1="8" y2="12"/>
-                                    <line x1="12" x2="12.01" y1="16" y2="16"/>
+                                    <polyline points="20,6 9,17 4,12"/>
                                 </svg>
-                                <span>Personalización limitada</span>
+                                <span>RSVP básico integrado</span>
                             </div>
                         </div>
-                        <button class="btn btn-outline btn-full package-btn">Elegir Básico</button>
+                        <button class="btn btn-outline btn-full package-btn" data-package="basico">Elegir Básico</button>
                     </div>
 
                     <div class="package-card featured">
@@ -193,7 +394,8 @@
                         <div class="package-header">
                             <h3 class="package-name">Intermedio</h3>
                             <div class="package-price">
-                                <span class="price">€499</span>
+                                <span class="price">€299</span>
+                                <span class="price-note">- €499</span>
                             </div>
                         </div>
                         <div class="package-features">
@@ -207,7 +409,7 @@
                                 <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="20,6 9,17 4,12"/>
                                 </svg>
-                                <span>Sistema RSVP integrado</span>
+                                <span>Sistema RSVP avanzado</span>
                             </div>
                             <div class="feature included">
                                 <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -234,14 +436,15 @@
                                 <span>Mapa de ubicación</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-full package-btn">Elegir Intermedio</button>
+                        <button class="btn btn-primary btn-full package-btn" data-package="intermedio">Elegir Intermedio</button>
                     </div>
 
                     <div class="package-card">
                         <div class="package-header">
                             <h3 class="package-name">Premium</h3>
                             <div class="package-price">
-                                <span class="price">€799</span>
+                                <span class="price">€499</span>
+                                <span class="price-note">- €799</span>
                             </div>
                         </div>
                         <div class="package-features">
@@ -282,64 +485,8 @@
                                 <span>Soporte prioritario 24/7</span>
                             </div>
                         </div>
-                        <button class="btn btn-outline btn-full package-btn">Elegir Premium</button>
+                        <button class="btn btn-outline btn-full package-btn" data-package="premium">Elegir Premium</button>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Blog Section -->
-        <section id="blog" class="blog">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Blog de Bodas</h2>
-                    <p class="section-description">Consejos, tendencias e inspiración para tu gran día</p>
-                </div>
-                <div class="blog-grid">
-                    <article class="blog-card">
-                        <div class="blog-image">
-                            <img src="/placeholder.svg?height=300&width=400" alt="Tendencias en invitaciones digitales 2024">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">15 Marzo 2024</span>
-                                <span class="blog-category">Tendencias</span>
-                            </div>
-                            <h3 class="blog-title">Tendencias en Invitaciones Digitales para 2024</h3>
-                            <p class="blog-excerpt">Descubre las últimas tendencias en diseño de invitaciones digitales que están marcando la diferencia en las bodas de este año.</p>
-                            <a href="#" class="blog-link">Leer más</a>
-                        </div>
-                    </article>
-
-                    <article class="blog-card">
-                        <div class="blog-image">
-                            <img src="/placeholder.svg?height=300&width=400" alt="Cómo personalizar tu invitación digital">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">10 Marzo 2024</span>
-                                <span class="blog-category">Consejos</span>
-                            </div>
-                            <h3 class="blog-title">Cómo Personalizar tu Invitación Digital</h3>
-                            <p class="blog-excerpt">Guía completa para crear una invitación digital única que refleje tu personalidad y el estilo de tu boda.</p>
-                            <a href="#" class="blog-link">Leer más</a>
-                        </div>
-                    </article>
-
-                    <article class="blog-card">
-                        <div class="blog-image">
-                            <img src="/placeholder.svg?height=300&width=400" alt="Ventajas de las invitaciones digitales">
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date">5 Marzo 2024</span>
-                                <span class="blog-category">Información</span>
-                            </div>
-                            <h3 class="blog-title">5 Ventajas de las Invitaciones Digitales</h3>
-                            <p class="blog-excerpt">Conoce por qué cada vez más parejas eligen invitaciones digitales para su boda y cómo pueden beneficiarte.</p>
-                            <a href="#" class="blog-link">Leer más</a>
-                        </div>
-                    </article>
                 </div>
             </div>
         </section>
@@ -348,8 +495,8 @@
         <section id="testimonios" class="testimonials">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Lo que Dicen Nuestras Parejas</h2>
-                    <p class="section-description">Testimonios reales de parejas que confiaron en nosotros para su gran día</p>
+                    <h2 class="section-title">Lo que Dicen Nuestros Clientes</h2>
+                    <p class="section-description">Testimonios reales de quienes confiaron en nosotros para sus eventos especiales</p>
                 </div>
                 <div class="testimonials-grid">
                     <div class="testimonial-card">
@@ -372,7 +519,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <p class="testimonial-text">"Nuestra invitación digital fue absolutamente perfecta. El diseño capturó exactamente lo que queríamos y nuestros invitados quedaron encantados. ¡Altamente recomendado!"</p>
+                        <p class="testimonial-text">"Nuestra invitación de boda fue absolutamente perfecta. El diseño capturó exactamente lo que queríamos y nuestros invitados quedaron encantados. ¡Altamente recomendado!"</p>
                         <div class="testimonial-author">
                             <img src="/placeholder.svg?height=60&width=60" alt="María y Carlos" class="author-photo">
                             <div class="author-info">
@@ -402,12 +549,12 @@
                                 </svg>
                             </div>
                         </div>
-                        <p class="testimonial-text">"El servicio fue excepcional desde el primer momento. Nos ayudaron en cada paso y el resultado superó nuestras expectativas. La funcionalidad RSVP nos facilitó mucho la organización."</p>
+                        <p class="testimonial-text">"Para el cumpleaños de mi hija elegimos el diseño festivo y fue un éxito total. Los invitados se divirtieron mucho con la invitación interactiva."</p>
                         <div class="testimonial-author">
-                            <img src="/placeholder.svg?height=60&width=60" alt="Ana y Miguel" class="author-photo">
+                            <img src="/placeholder.svg?height=60&width=60" alt="Carmen López" class="author-photo">
                             <div class="author-info">
-                                <h4 class="author-name">Ana y Miguel</h4>
-                                <p class="author-date">Boda en Barcelona, 2024</p>
+                                <h4 class="author-name">Carmen López</h4>
+                                <p class="author-date">Cumpleaños en Valencia, 2024</p>
                             </div>
                         </div>
                     </div>
@@ -432,12 +579,12 @@
                                 </svg>
                             </div>
                         </div>
-                        <p class="testimonial-text">"Elegimos el paquete Premium y valió cada euro. Las animaciones personalizadas y el video de fondo hicieron que nuestra invitación fuera única. ¡Gracias por hacer nuestro día especial!"</p>
+                        <p class="testimonial-text">"El baby shower de mi nieta fue perfecto gracias a la invitación digital. El diseño dulce y la facilidad para confirmar asistencia hicieron todo más sencillo."</p>
                         <div class="testimonial-author">
-                            <img src="/placeholder.svg?height=60&width=60" alt="Laura y David" class="author-photo">
+                            <img src="/placeholder.svg?height=60&width=60" alt="Rosa Martín" class="author-photo">
                             <div class="author-info">
-                                <h4 class="author-name">Laura y David</h4>
-                                <p class="author-date">Boda en Madrid, 2024</p>
+                                <h4 class="author-name">Rosa Martín</h4>
+                                <p class="author-date">Baby Shower en Madrid, 2024</p>
                             </div>
                         </div>
                     </div>
@@ -452,7 +599,7 @@
                     <div class="contact-info">
                         <h2 class="contact-title">¿Listo para Crear tu Invitación?</h2>
                         <p class="contact-description">
-                            Contáctanos y comencemos a diseñar la invitación digital perfecta para tu boda. Nuestro equipo está aquí para hacer realidad tu visión.
+                            Contáctanos y comencemos a diseñar la invitación digital perfecta para tu evento especial. Nuestro equipo está aquí para hacer realidad tu visión.
                         </p>
                         <div class="contact-details">
                             <div class="contact-item">
@@ -489,7 +636,7 @@
                     <div class="contact-form-container">
                         <form class="contact-form" id="contactForm">
                             <div class="form-group">
-                                <label for="name">Nombres de la Pareja</label>
+                                <label for="name">Nombre Completo</label>
                                 <input type="text" id="name" name="name" required>
                             </div>
                             <div class="form-group">
@@ -501,16 +648,27 @@
                                 <input type="tel" id="phone" name="phone">
                             </div>
                             <div class="form-group">
-                                <label for="wedding-date">Fecha de la Boda</label>
-                                <input type="date" id="wedding-date" name="wedding-date">
+                                <label for="event-type">Tipo de Evento</label>
+                                <select id="event-type" name="event-type" required>
+                                    <option value="">Selecciona el tipo de evento</option>
+                                    <option value="boda">Boda</option>
+                                    <option value="cumpleanos">Cumpleaños</option>
+                                    <option value="bautizo">Bautizo</option>
+                                    <option value="baby-shower">Baby Shower</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-date">Fecha del Evento</label>
+                                <input type="date" id="event-date" name="event-date">
                             </div>
                             <div class="form-group">
                                 <label for="package">Paquete de Interés</label>
                                 <select id="package" name="package">
                                     <option value="">Selecciona un paquete</option>
-                                    <option value="basico">Básico - €299</option>
-                                    <option value="intermedio">Intermedio - €499</option>
-                                    <option value="premium">Premium - €799</option>
+                                    <option value="basico">Básico - €159-€299</option>
+                                    <option value="intermedio">Intermedio - €299-€499</option>
+                                    <option value="premium">Premium - €499-€799</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -525,13 +683,197 @@
         </section>
     </main>
 
+    <!-- Customization Modal -->
+    <div id="customizationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Personalizar Invitación</h2>
+                <button class="close-modal" id="closeModal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" x2="6" y1="6" y2="18"/>
+                        <line x1="6" x2="18" y1="6" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="customization-content">
+                    <div class="customization-form">
+                        <form id="customizationForm">
+                            <div class="form-group">
+                                <label for="event-title">Título del Evento</label>
+                                <input type="text" id="event-title" name="event-title" placeholder="Ej: Nuestra Boda" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="names">Nombres</label>
+                                <input type="text" id="names" name="names" placeholder="Ej: María & Carlos" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Fecha</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Hora</label>
+                                <input type="time" id="time" name="time" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Ubicación</label>
+                                <input type="text" id="location" name="location" placeholder="Ej: Salón de Eventos Paradise" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="color-scheme">Esquema de Colores</label>
+                                <select id="color-scheme" name="color-scheme">
+                                    <option value="gold-blue">Dorado y Azul</option>
+                                    <option value="pink-gold">Rosa y Dorado</option>
+                                    <option value="green-white">Verde y Blanco</option>
+                                    <option value="purple-silver">Púrpura y Plata</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="package-select">Paquete</label>
+                                <select id="package-select" name="package-select" required>
+                                    <option value="basico">Básico - €159-€299</option>
+                                    <option value="intermedio">Intermedio - €299-€499</option>
+                                    <option value="premium">Premium - €499-€799</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="special-message">Mensaje Especial</label>
+                                <textarea id="special-message" name="special-message" rows="3" placeholder="Mensaje personalizado para tus invitados..."></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="preview-container">
+                        <h3>Vista Previa</h3>
+                        <div class="invitation-preview" id="invitationPreview">
+                            <div class="preview-content">
+                                <h4 id="previewTitle">Tu Evento Especial</h4>
+                                <h3 id="previewNames">Nombres</h3>
+                                <p id="previewDate">Fecha</p>
+                                <p id="previewTime">Hora</p>
+                                <p id="previewLocation">Ubicación</p>
+                                <p id="previewMessage">Mensaje especial...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancelCustomization">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="proceedToCheckout">Proceder al Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Finalizar Compra</h2>
+                <button class="close-modal" id="closeCheckoutModal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" x2="6" y1="6" y2="18"/>
+                        <line x1="6" x2="18" y1="6" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="checkout-content">
+                    <div class="order-summary">
+                        <h3>Resumen del Pedido</h3>
+                        <div class="order-item">
+                            <div class="item-info">
+                                <h4 id="orderDesign">Diseño Seleccionado</h4>
+                                <p id="orderPackage">Paquete Seleccionado</p>
+                                <p id="orderDetails">Detalles del evento</p>
+                            </div>
+                            <div class="item-price" id="orderPrice">€299</div>
+                        </div>
+                        <div class="order-total">
+                            <div class="total-line">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">€299</span>
+                            </div>
+                            <div class="total-line">
+                                <span>IVA (21%):</span>
+                                <span id="tax">€62.79</span>
+                            </div>
+                            <div class="total-line total">
+                                <span>Total:</span>
+                                <span id="total">€361.79</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-section">
+                        <h3>Método de Pago</h3>
+                        <div class="payment-methods">
+                            <button class="payment-method active" data-method="stripe">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                    <line x1="1" x2="23" y1="10" y2="10"/>
+                                </svg>
+                                Tarjeta de Crédito
+                            </button>
+                            <button class="payment-method" data-method="paypal">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M7 13l3 3 7-7"/>
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                PayPal
+                            </button>
+                        </div>
+                        <div id="stripe-payment" class="payment-form">
+                            <div class="form-group">
+                                <label for="card-element">Información de la Tarjeta</label>
+                                <div id="card-element">
+                                    <!-- Stripe Elements will create form elements here -->
+                                </div>
+                                <div id="card-errors" role="alert"></div>
+                            </div>
+                        </div>
+                        <div id="paypal-payment" class="payment-form" style="display: none;">
+                            <div id="paypal-button-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="backToCustomization">Volver</button>
+                    <button type="button" class="btn btn-primary" id="completePayment">Completar Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="close-cart" id="closeCart">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" x2="6" y1="6" y2="18"/>
+                    <line x1="6" x2="18" y1="6" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="cart-content" id="cartContent">
+            <div class="empty-cart">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="8" cy="21" r="1"/>
+                    <circle cx="19" cy="21" r="1"/>
+                    <path d="m2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                </svg>
+                <p>Tu carrito está vacío</p>
+                <button class="btn btn-primary" onclick="scrollToSection('eventos')">Ver Diseños</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3 class="footer-title">InviteU.Digital</h3>
-                    <p class="footer-description">Creamos invitaciones digitales únicas que hacen de tu boda un momento inolvidable.</p>
+                    <p class="footer-description">Creamos invitaciones digitales únicas para todos tus eventos especiales.</p>
                     <div class="social-links">
                         <a href="#" class="social-link">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -551,21 +893,21 @@
                     </div>
                 </div>
                 <div class="footer-section">
+                    <h3 class="footer-title">Eventos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Bodas</a></li>
+                        <li><a href="#" class="footer-link">Cumpleaños</a></li>
+                        <li><a href="#" class="footer-link">Bautizos</a></li>
+                        <li><a href="#" class="footer-link">Baby Showers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
                     <h3 class="footer-title">Servicios</h3>
                     <ul class="footer-links">
                         <li><a href="#" class="footer-link">Paquete Básico</a></li>
                         <li><a href="#" class="footer-link">Paquete Intermedio</a></li>
                         <li><a href="#" class="footer-link">Paquete Premium</a></li>
                         <li><a href="#" class="footer-link">Diseños Personalizados</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3 class="footer-title">Recursos</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Blog</a></li>
-                        <li><a href="#" class="footer-link">Galería</a></li>
-                        <li><a href="#" class="footer-link">Preguntas Frecuentes</a></li>
-                        <li><a href="#" class="footer-link">Soporte</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -582,6 +924,313 @@
             </div>
         </div>
     </footer>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Iniciar Sesión</h2>
+      <button class="close-modal" id="closeLoginModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" x2="6" y1="6" y2="18"/>
+          <line x1="6" x2="18" y1="6" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" name="password" required>
+          <div class="password-help">
+            <a href="#" id="showPasswordReset">¿Olvidaste tu contraseña?</a>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Iniciar Sesión</button>
+      </form>
+      <div class="auth-footer">
+        <p>¿No tienes cuenta? <a href="#" id="switchToRegister">Regístrate aquí</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div id="registerModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Crear Cuenta</h2>
+      <button class="close-modal" id="closeRegisterModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" x2="6" y1="6" y2="18"/>
+          <line x1="6" x2="18" y1="6" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="registerForm" class="auth-form">
+        <div class="form-group">
+          <label for="registerName">Nombre Completo</label>
+          <input type="text" id="registerName" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">Email</label>
+          <input type="email" id="registerEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPhone">Teléfono</label>
+          <input type="tel" id="registerPhone" name="phone">
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Contraseña</label>
+          <input type="password" id="registerPassword" name="password" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirmar Contraseña</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Crear Cuenta</button>
+      </form>
+      <div class="auth-footer">
+        <p>¿Ya tienes cuenta? <a href="#" id="switchToLogin">Inicia sesión aquí</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Panel Modal -->
+<div id="userPanelModal" class="modal">
+  <div class="modal-content modal-large">
+    <div class="modal-header">
+      <h2>Mi Panel de Usuario</h2>
+      <button class="close-modal" id="closeUserPanelModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" x2="6" y1="6" y2="18"/>
+          <line x1="6" x2="18" y1="6" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="user-panel-content">
+        <div class="user-panel-sidebar">
+          <div class="user-info">
+            <div class="user-avatar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <h3 id="panelUserName">Usuario</h3>
+            <p id="panelUserEmail">email@ejemplo.com</p>
+          </div>
+          <nav class="panel-nav">
+            <button class="panel-nav-btn active" data-section="orders">Mis Pedidos</button>
+            <button class="panel-nav-btn" data-section="profile">Mi Perfil</button>
+            <button class="panel-nav-btn" data-section="settings">Configuración</button>
+          </nav>
+        </div>
+        <div class="user-panel-main">
+          <div id="ordersSection" class="panel-section active">
+            <h3>Mis Pedidos</h3>
+            <div id="userOrders" class="orders-list">
+              <!-- Orders will be populated here -->
+            </div>
+          </div>
+          <div id="profileSection" class="panel-section">
+            <h3>Mi Perfil</h3>
+            <form id="profileForm" class="profile-form">
+              <div class="form-group">
+                <label for="profileName">Nombre Completo</label>
+                <input type="text" id="profileName" name="name">
+              </div>
+              <div class="form-group">
+                <label for="profileEmail">Email</label>
+                <input type="email" id="profileEmail" name="email" readonly>
+              </div>
+              <div class="form-group">
+                <label for="profilePhone">Teléfono</label>
+                <input type="tel" id="profilePhone" name="phone">
+              </div>
+              <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+            </form>
+          </div>
+          <div id="settingsSection" class="panel-section">
+            <h3>Configuración</h3>
+            <div class="settings-options">
+              <div class="setting-item">
+                <h4>Notificaciones por Email</h4>
+                <label class="toggle">
+                  <input type="checkbox" id="emailNotifications" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="setting-item">
+                <h4>Notificaciones Push</h4>
+                <label class="toggle">
+                  <input type="checkbox" id="pushNotifications" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="setting-item">
+                <h4>Cambiar Contraseña</h4>
+                <button class="btn btn-outline" id="changePasswordBtn">Cambiar Contraseña</button>
+              </div>
+              <div class="setting-item">
+                <h4>Verificar Email</h4>
+                <div class="verification-status">
+                  <span id="emailVerificationStatus" class="status-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22,4 12,14.01 9,11.01"/>
+                    </svg>
+                    Verificado
+                  </span>
+                  <button class="btn btn-outline btn-sm" id="resendVerificationBtn2" style="display: none;">
+                    Reenviar Verificación
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Password Reset Modal -->
+<div id="passwordResetModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Recuperar Contraseña</h2>
+      <button class="close-modal" id="closePasswordResetModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" x2="6" y1="6" y2="18"/>
+          <line x1="6" x2="18" y1="6" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="passwordResetForm" class="auth-form">
+        <div class="form-group">
+          <label for="resetEmail">Email</label>
+          <input type="email" id="resetEmail" name="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Enviar Email de Recuperación</button>
+      </form>
+      <div class="auth-footer">
+        <p>¿Recordaste tu contraseña? <a href="#" id="backToLogin">Inicia sesión aquí</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Email Verification Modal -->
+<div id="emailVerificationModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Verificar Email</h2>
+      <button class="close-modal" id="closeEmailVerificationModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" x2="6" y1="6" y2="18"/>
+          <line x1="6" x2="18" y1="6" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="verification-content">
+        <div class="verification-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <h3>¡Verifica tu email!</h3>
+        <p>Hemos enviado un email de verificación a:</p>
+        <p class="verification-email"><strong id="verificationEmail">email@ejemplo.com</strong></p>
+        <p>Haz clic en el enlace del email para verificar tu cuenta.</p>
+        <div class="verification-actions">
+          <button class="btn btn-outline" id="resendVerificationBtn">Reenviar Email</button>
+          <button class="btn btn-primary" onclick="closeModal(emailVerificationModal)">Entendido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Dashboard Modal -->
+<div id="adminDashboardModal" class="modal">
+  <div class="modal-content modal-large">
+    <div class="modal-header">
+      <h2>Panel de Administración</h2>
+      <button class="close-modal" id="closeAdminDashboardModal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" x2="6" y1="6" y2="18"/>
+          <line x1="6" x2="18" y1="6" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="admin-dashboard">
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalUsers">0</h3>
+              <p>Usuarios Totales</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalOrders">0</h3>
+              <p>Pedidos Totales</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" x2="12" y1="1" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalRevenue">€0</h3>
+              <p>Ingresos Totales</p>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-content">
+          <div class="recent-orders">
+            <h3>Pedidos Recientes</h3>
+            <div id="recentOrdersList">
+              <!-- Recent orders will be populated here -->
+            </div>
+          </div>
+          <div class="user-analytics">
+            <h3>Análisis de Usuarios</h3>
+            <div class="analytics-chart">
+              <canvas id="userChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
     <script src="script.js"></script>
 </body>
